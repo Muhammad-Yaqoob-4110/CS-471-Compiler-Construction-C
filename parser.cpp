@@ -10,6 +10,7 @@ using namespace std;
 enum TokenType {
     T_INT, T_FLOAT, T_DOUBLE, T_STRING, T_BOOL, T_CHAR, // datatypes 
     T_ID, T_NUM, T_IF, T_ELSE, T_RETURN, 
+    T_AGAR, T_MAGAR,//  our own keywords
     T_WHILE, T_FOR, T_DO, T_TRUE, T_FALSE, // keywords
     T_ASSIGN, T_PLUS, T_MINUS, T_MUL, T_DIV, 
     T_LPAREN, T_RPAREN, T_LBRACE, T_RBRACE,  
@@ -60,13 +61,15 @@ class Lexer {
                     else if (word == "bool") tokens.push_back(Token{T_BOOL, word, line});
                     else if (word == "char") tokens.push_back(Token{T_CHAR, word, line});
                     else if (word == "if") tokens.push_back(Token{T_IF, word, line});
+                    else if (word == "agar") tokens.push_back(Token{T_AGAR, word, line});  // agar magar🎈
+                    else if (word == "magar") tokens.push_back(Token{T_MAGAR, word, line});  // agar magar🎈
                     else if (word == "else") tokens.push_back(Token{T_ELSE, word, line});
                     else if (word == "return") tokens.push_back(Token{T_RETURN, word, line});
-                    else if (word == "while") tokens.push_back(Token{T_WHILE, word});
-                    else if (word == "for") tokens.push_back(Token{T_FOR, word});
-                    else if (word == "do") tokens.push_back(Token{T_DO, word});
-                    else if (word == "true") tokens.push_back(Token{T_TRUE, word});
-                    else if (word == "false") tokens.push_back(Token{T_FALSE, word});
+                    else if (word == "while") tokens.push_back(Token{T_WHILE, word, line});
+                    else if (word == "for") tokens.push_back(Token{T_FOR, word, line});
+                    else if (word == "do") tokens.push_back(Token{T_DO, word, line});
+                    else if (word == "true") tokens.push_back(Token{T_TRUE, word,line});
+                    else if (word == "false") tokens.push_back(Token{T_FALSE, word, line});
                     else tokens.push_back(Token{T_ID, word, line});
                     continue;
                 }
@@ -134,6 +137,8 @@ private:
             parseAssignment();
         } else if (tokens[pos].type == T_IF) {
             parseIfStatement();
+        } else if (tokens[pos].type == T_AGAR) {  // agar magar
+            parseAgarStatement();
         } else if (tokens[pos].type == T_RETURN) {
             parseReturnStatement();
             } else if (tokens[pos].type == T_WHILE) {
@@ -183,6 +188,18 @@ private:
         parseStatement();  
         if (tokens[pos].type == T_ELSE) {
             expect(T_ELSE);
+            parseStatement();  
+        }
+    }
+
+    void parseAgarStatement() {
+        expect(T_AGAR);
+        expect(T_LPAREN);
+        parseExpression();
+        expect(T_RPAREN);
+        parseStatement();  
+        if (tokens[pos].type == T_MAGAR) {
+            expect(T_MAGAR);
             parseStatement();  
         }
     }
