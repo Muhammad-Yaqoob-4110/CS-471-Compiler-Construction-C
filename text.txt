@@ -1,6 +1,6 @@
-int a;
+double a;
 a = 5;
-int b;
+haho b;
 b = a + 10;
 if (b > 10) {
     return b;
