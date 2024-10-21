@@ -26,3 +26,6 @@ To read the file from the command line. We need to follow:
 
 # Task 2
 To display the line number of the error, i added the line variable to the `Token Struct`. Line number of error is possible to detect from the parser class. So, when the token of `\n` comes in code, program add the line number in the `TOKENS VECTOR`. After that i have changed the error messagges to human friendly readable way.
+
+# Task 3
+I have added support for more data types in the lexical analyzer. In addition to detecting `int`, the lexer now recognizes `float`, `double`, `string`, `bool`, and `char` as valid data types. When the lexer encounters any of these keywords, it classifies them as tokens of their respective types, ensuring that these data types are correctly processed during tokenization.
