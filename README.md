@@ -29,3 +29,6 @@ To display the line number of the error, i added the line variable to the `Token
 
 # Task 3
 I have added support for more data types in the lexical analyzer. In addition to detecting `int`, the lexer now recognizes `float`, `double`, `string`, `bool`, and `char` as valid data types. When the lexer encounters any of these keywords, it classifies them as tokens of their respective types, ensuring that these data types are correctly processed during tokenization.
+
+# Task 4
+I have added support for `while` and `do while` statements in the syntax analyzer. The parser now recognizes these keywords, allowing it to correctly process their respective constructs. The `parseWhileStatement` `method` checks for the while keyword and its associated expression and statement, while the `parseDoWhileStatement` method handles the `do while` construct, ensuring that the syntax is validated according to the language's grammar.
