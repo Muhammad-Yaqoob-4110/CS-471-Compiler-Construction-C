@@ -27,3 +27,10 @@ if (condition) {
 } else {
     return 0;
 }
+
+
+agar (b > 10) {
+    return b;
+} magar {
+    return 0;
+}
