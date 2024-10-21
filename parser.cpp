@@ -18,6 +18,7 @@ enum TokenType {
 struct Token {
     TokenType type;
     string value;
+    int line;
 };
 
 class Lexer {
@@ -25,11 +26,13 @@ class Lexer {
     private:
         string src;
         size_t pos;
+        int line;
 
     public:
         Lexer(const string &src) {
             this->src = src;  
-            this->pos = 0;    
+            this->pos = 0;   
+            this->line = 1; 
         }
 
         vector<Token> tokenize() {
@@ -38,11 +41,12 @@ class Lexer {
                 char current = src[pos];
                 
                 if (isspace(current)) {
+                    if (current == '\n') line++;
                     pos++;
                     continue;
                 }
                 if (isdigit(current)) {
-                    tokens.push_back(Token{T_NUM, consumeNumber()});
+                    tokens.push_back(Token{T_NUM, consumeNumber(), line});
                     continue;
                 }
                 if (isalpha(current)) {
@@ -67,11 +71,11 @@ class Lexer {
                         case '}': tokens.push_back(Token{T_RBRACE, "}"}); break;  
                         case ';': tokens.push_back(Token{T_SEMICOLON, ";"}); break;
                         case '>': tokens.push_back(Token{T_GT, ">"}); break;
-                        default: cout << "Unexpected character: " << current << endl; exit(1);
+                        default: cout << "Unexpected character: " << current << " at line " << line << endl; exit(1);
                 }
                 pos++;
             }
-            tokens.push_back(Token{T_EOF, ""});
+            tokens.push_back(Token{T_EOF, "", line});
             return tokens;
         }
 
@@ -122,7 +126,7 @@ private:
         } else if (tokens[pos].type == T_LBRACE) {  
             parseBlock();
         } else {
-            cout << "Syntax error: unexpected token " << tokens[pos].value << endl;
+            cout << "Syntax error: unexpected token '" << tokens[pos].value << "' at line " << tokens[pos].line << endl;
             exit(1);
         }
     }
@@ -193,7 +197,8 @@ private:
             parseExpression();
             expect(T_RPAREN);
         } else {
-            cout << "Syntax error: unexpected token " << tokens[pos].value << endl;
+            cout << "Syntax error: unexpected token '" << tokens[pos].value << "' at line " << tokens[pos].line << endl;
+            // cout << "Syntax error: unexpected token " << tokens[pos].value << endl;
             exit(1);
         }
     }
@@ -202,7 +207,8 @@ private:
         if (tokens[pos].type == type) {
             pos++;
         } else {
-            cout << "Syntax error: expected " << type << " but found " << tokens[pos].value << endl;
+            cout << "Syntax error: unexpected token '" << tokens[pos].value << "' at line " << tokens[pos].line << endl;
+            // cout << "Syntax error: expected " << type << " but found " << tokens[pos].value << endl;
             exit(1);
         }
     }
@@ -233,7 +239,7 @@ int main(int argc, char *argv[])
         input += line + "\n";
     }
 
-    cout << input;
+    // cout << input;
 
     // Close the file
     inputFile.close();
