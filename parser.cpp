@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <map>
+#include <fstream>
 
 using namespace std;
 
@@ -24,12 +25,6 @@ class Lexer {
     private:
         string src;
         size_t pos;
-        /*
-        It hold positive values. 
-        In C++, size_t is an unsigned integer data type used to represent the 
-        size of objects in bytes or indices, especially when working with memory-related 
-        functions, arrays, and containers like vector or string. You can also use the int data type but size_t is recommended one
-        */
 
     public:
         Lexer(const string &src) {
@@ -213,22 +208,38 @@ private:
     }
 };
 
-int main() {
-    string input = R"(
-        int a;
-        a = 5;
-        int b;
-        b = a + 10;
-        if (b > 10) {
-            return b;
-        } else {
-            return 0;
-        }
-    )";
+int main(int argc, char *argv[])
+{
+    // Task  1
+    // Check if the correct number of arguments is provided
+    if (argc != 2)
+    {
+        cerr << "Usage: " << argv[0] << " <filename>" << endl;
+        return 1;
+    }
+
+    // Open the file
+    ifstream inputFile(argv[1]);
+    if (!inputFile.is_open())
+    {
+        cerr << "Error opening file: " << argv[1] << endl;
+        return 1;
+    }
+
+    // // Read and print the file content
+    string input = "", line;
+    while (getline(inputFile, line))
+    {
+        input += line + "\n";
+    }
+
+    cout << input;
+
+    // Close the file
+    inputFile.close();
 
     Lexer lexer(input);
     vector<Token> tokens = lexer.tokenize();
-    
     Parser parser(tokens);
     parser.parseProgram();
 
