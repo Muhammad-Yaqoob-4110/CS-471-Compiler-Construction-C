@@ -1,9 +1,29 @@
 double a;
 a = 5;
-haho b;
+float b;
 b = a + 10;
 if (b > 10) {
     return b;
+} else {
+    return 0;
+}
+
+int a;
+bool condition;
+a = 5;
+condition = true;
+
+while (a > 0) {
+    a = a - 1;
+}
+
+
+do {
+    a = a + 1;
+} while (a > 10);
+
+if (condition) {
+    return a;
 } else {
     return 0;
 }
