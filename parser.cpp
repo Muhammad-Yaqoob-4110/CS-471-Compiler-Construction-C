@@ -8,8 +8,9 @@
 using namespace std;
 
 enum TokenType {
-    T_INT, T_FLOAT, T_DOUBLE, T_STRING, T_BOOL, T_CHAR, 
+    T_INT, T_FLOAT, T_DOUBLE, T_STRING, T_BOOL, T_CHAR, // datatypes 
     T_ID, T_NUM, T_IF, T_ELSE, T_RETURN, 
+    T_WHILE, T_FOR, T_DO, T_TRUE, T_FALSE, // keywords
     T_ASSIGN, T_PLUS, T_MINUS, T_MUL, T_DIV, 
     T_LPAREN, T_RPAREN, T_LBRACE, T_RBRACE,  
     T_SEMICOLON, T_GT, T_EOF, 
@@ -61,6 +62,11 @@ class Lexer {
                     else if (word == "if") tokens.push_back(Token{T_IF, word, line});
                     else if (word == "else") tokens.push_back(Token{T_ELSE, word, line});
                     else if (word == "return") tokens.push_back(Token{T_RETURN, word, line});
+                    else if (word == "while") tokens.push_back(Token{T_WHILE, word});
+                    else if (word == "for") tokens.push_back(Token{T_FOR, word});
+                    else if (word == "do") tokens.push_back(Token{T_DO, word});
+                    else if (word == "true") tokens.push_back(Token{T_TRUE, word});
+                    else if (word == "false") tokens.push_back(Token{T_FALSE, word});
                     else tokens.push_back(Token{T_ID, word, line});
                     continue;
                 }
@@ -130,8 +136,12 @@ private:
             parseIfStatement();
         } else if (tokens[pos].type == T_RETURN) {
             parseReturnStatement();
+            } else if (tokens[pos].type == T_WHILE) {
+            parseWhileStatement();
+        }  else if (tokens[pos].type == T_DO) { 
+            parseDoWhileStatement();
         } else if (tokens[pos].type == T_LBRACE) {  
-            parseBlock();
+                parseBlock();
         } else {
             cout << "Syntax error: unexpected token '" << tokens[pos].value << "' at line " << tokens[pos].line << endl;
             exit(1);
@@ -205,6 +215,8 @@ private:
 
     void parseFactor() {
         if (tokens[pos].type == T_NUM || tokens[pos].type == T_ID) {
+        pos++;
+        } else if (tokens[pos].type == T_TRUE || tokens[pos].type == T_FALSE) {
             pos++;
         } else if (tokens[pos].type == T_LPAREN) {
             expect(T_LPAREN);
@@ -226,6 +238,25 @@ private:
             exit(1);
         }
     }
+
+    void parseWhileStatement() {
+    expect(T_WHILE);
+    expect(T_LPAREN);
+    parseExpression();
+    expect(T_RPAREN);
+    parseStatement();
+    }
+
+    void parseDoWhileStatement() {
+        expect(T_DO);
+        parseStatement();
+        expect(T_WHILE);
+        expect(T_LPAREN);
+        parseExpression();
+        expect(T_RPAREN);
+        expect(T_SEMICOLON);
+    }
+
 };
 
 int main(int argc, char *argv[])
