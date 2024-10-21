@@ -32,3 +32,6 @@ I have added support for more data types in the lexical analyzer. In addition to
 
 # Task 4
 I have added support for `while` and `do while` statements in the syntax analyzer. The parser now recognizes these keywords, allowing it to correctly process their respective constructs. The `parseWhileStatement` `method` checks for the while keyword and its associated expression and statement, while the `parseDoWhileStatement` method handles the `do while` construct, ensuring that the syntax is validated according to the language's grammar.
+
+# Task 5
+I have replaced the if-else block with the keywords agar-magar. So, the user can write agar instead of if and magar instead of else block. I have also added the `parseAgarStatment` that is much similar to the the  `parseIfStatement`.
