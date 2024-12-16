@@ -1,0 +1,100 @@
+// Hanlde Preprocessor Directives
+// #include<iostream>
+
+
+int x = 10;
+int y = 20;
+
+// Handle Int dataype
+int sum = 40;
+
+// // Handle Float Datatype
+float price;
+price = 20.09774;
+
+// Handle Double datatype
+double pi;
+pi = 3.14e+2;
+
+
+// Hanlding Single Line Comment
+string name = "Ali Ahmed";
+
+// Handling Boolean Datatype
+bool flag = false;
+
+// Handle Multi Line Comment
+/*
+This is the compiler constrction lab.
+And I am working on the Multi line
+Comments
+*/
+
+
+// Handle EQ Operator
+if( x == 10){
+    y = 999;
+}
+
+// // Hanlde Not Equal Operator
+if( x != y){
+    price = price * price;
+}
+
+// // Handle Less Than Or Equal
+if(price <= 12){
+    name = "Yaqoob Ali";
+}
+
+
+// // Handle Greater Than Or Equal
+int count = 25;
+
+int a = 10;
+int b = 20;
+
+
+// // If - Else Statements
+if( a < 10){
+    sum = a + b + sum;
+}
+else{
+    sum = x + y + 3;
+}
+
+// Agar Magar Statements
+agar(x > y){
+    x = 20 + sum;
+}
+magar{
+    sum = y;
+}
+
+
+while(sum > 5){
+    x = x + 30;
+    sum = sum + 1;
+}
+
+// FOR LOOP
+for(int i = 0; i > 5; i = i + 1){
+    // return 0;
+}
+
+bool result;
+switch (x) {
+    case 1:
+        result = true;
+        break;
+    case 2:
+        result = false;
+        break;
+    default:
+        result = x > 0;
+}
+
+
+do {
+   x = x + 1;
+   y = y * 2;
+} while (x < 10);
