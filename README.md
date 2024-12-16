@@ -46,3 +46,5 @@ Crate a dircotry named bin in the root folder and then. Just write the make comm
 ```
 make
 ```
+
+You will also need to create the target folder in the root direcotry. Because the target generated code is set to this folder. Otherwise, you will not be able to generate assembly and intermediate code file.
